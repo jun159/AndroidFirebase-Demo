@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -64,7 +65,8 @@ public class RegistrationActivity extends FirebaseBaseActivity implements View.O
                                 }
                             });
                 } else {
-                    Toast.makeText(RegistrationActivity.this, "Please do not leave the fields empty.", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(editEmail, "Please do not leave the fields empty.", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
 
                 break;
@@ -77,7 +79,9 @@ public class RegistrationActivity extends FirebaseBaseActivity implements View.O
     }
 
     private void updateUI() {
-        Toast.makeText(RegistrationActivity.this, "You have registered successfully", Toast.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(editEmail, "You have registered successfully.", Snackbar.LENGTH_LONG);
+        snackbar.show();
+
         Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
         intent.putExtra(LoginActivity.KEY_EMAIL, textEmailAddress);
         startActivity(intent);

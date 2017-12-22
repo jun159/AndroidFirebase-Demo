@@ -22,5 +22,7 @@
     <string name="button_forgot_password">Forgotten Password?</string>
     <string name="button_sign_up">Sign Up With Email</string>
     <string name="login_success">You have logged in successfully.</string>
+    <string name="click_me">Click Me!</string>
+    <string name="do_not_click_me">Do NOT Click Me!</string>
     <string name="title_activity_registration">Register</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -96,7 +97,8 @@ public class LoginActivity extends FirebaseBaseActivity implements View.OnClickL
                                 }
                             });
                 } else {
-                    Toast.makeText(LoginActivity.this, "Please do not leave the fields empty.", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(editEmail, "Please do not leave the fields empty.", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
 
                 break;
@@ -154,7 +156,9 @@ public class LoginActivity extends FirebaseBaseActivity implements View.OnClickL
     }
 
     private void updateUI() {
-        Toast.makeText(LoginActivity.this, "You are logged in", Toast.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(editEmail, "You have logged in successfully.", Snackbar.LENGTH_LONG);
+        snackbar.show();
+
         Intent intent = new Intent(LoginActivity.this, UserActivity.class);
         startActivity(intent);
         finish();
