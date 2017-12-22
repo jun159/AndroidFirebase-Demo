@@ -13,7 +13,7 @@ This application demonstrates how to use Firebase for:
 3. Connect app to Firebase by clicking `Connect to Firebase` button and once dialog opens, click on the blue button below.
 4. Once app is connected, add Firebase Authentication to the app.
 
-### Android Email/Password Login with Firebase
+## Android Email/Password Login with Firebase
 
 #### Step 1 - Enable Email Login
 1. Go to [Firebase](https://console.firebase.google.com/) console page and go to `Authentication` -> `Sign-in Method` 
@@ -197,7 +197,7 @@ public class LoginActivity extends FirebaseBaseActivity implements View.OnClickL
     }
 }
 ```
-### Android Facebook Login with Firebase
+## Android Facebook Login with Firebase
 
 #### Step 1 - Enable Facebook Login
 1. Go to [Facebook for Developers](https://developers.facebook.com/).
