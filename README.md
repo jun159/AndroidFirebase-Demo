@@ -1,20 +1,22 @@
-# FacebookFirebase-Demo
-Android Facebook Login with Firebase
+# Firebase-Demo
+Android Firebase
 
-## Step 1 - Connect App with Firebase
+## Android Facebook Login with Firebase in - Android Studio
+
+### Step 1 - Connect App with Firebase
 1. In Android Studio, go to `Tools` -> `Firebase`.
 2. Go to `Authentication` -> `Email and password authentication`. 
 3. Connect app to Firebase by clicking `Connect to Firebase` button and once dialog opens, click on the blue button below.
 4. Once app is connected, add Firebase Authentication to the app.
 
-## Step 2 - Enable Facebook Login
+### Step 2 - Enable Facebook Login
 1. Go to [Facebook for Developers](https://developers.facebook.com/).
 2. On top right hand corner, go to `Create App` button and enter the App name as the display name and your own contact email.
 3. Go to Facebook console page and go to `Dashboard` to retrieve `App ID` and `App Secret`.
 4. Go to Firebase console page and go to `Authentication` -> `Sign-in Method` and enable Facebook login. Enter the `App ID` and `App Secret` retrieved from Facebook console page. Copy the OAuth redirect URI as well.
 5. Go back to Facebook console page and click on `Add Product`-> under Facebook, click `Setup`. Paste the OAuth redirect URI under the textbox for `Valid OAuth redirect URIs`.
 
-## Step 3 - Setup in Android Studio
+### Step 3 - Setup in Android Studio
 1. Go to [Facebook Login](https://developers.facebook.com/docs/facebook-login/android).
 2. Select your app in step 1.
 3. Link the Facebook SDK by selecting `Maven`. Add the following code in `build.gradle(Project)`
@@ -74,7 +76,7 @@ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore |
 ```
 Enter the generated key hash in [Facebook Login](https://developers.facebook.com/docs/facebook-login/android). 
 
-## Step 4 - Android Code for Facebook Authentication
+### Step 4 - Android Code for Facebook Authentication
 1. Add Facebook Login Button in xml layout file:
 ```xml
 <Button
