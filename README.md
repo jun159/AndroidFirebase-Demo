@@ -1,22 +1,203 @@
 # Firebase-Demo
 Android Firebase
 
-## Android Facebook Login with Firebase
+## Android Authentication
 
-### Step 1 - Connect App with Firebase
+#### Step 1 - Connect App with Firebase
 1. In Android Studio, go to `Tools` -> `Firebase`.
 2. Go to `Authentication` -> `Email and password authentication`. 
 3. Connect app to Firebase by clicking `Connect to Firebase` button and once dialog opens, click on the blue button below.
 4. Once app is connected, add Firebase Authentication to the app.
 
-### Step 2 - Enable Facebook Login
+### Android Email/Password Login with Firebase
+
+#### Step 1 - Enable Email Login
+1. Go to [Firebase](https://console.firebase.google.com/) console page and go to `Authentication` -> `Sign-in Method` and enable Email/Password login. 
+
+#### Step 2 - Setup in Android Studio
+1. Add the following code in `build.gradle(Project)`
+```gradle
+buildscript {
+    dependencies {
+        ...
+        classpath 'com.google.gms:google-services:3.1.0'
+    }
+}
+```
+
+#### Step 3 - Android Code for Facebook Authentication
+1. Add the following Java code in RegisterActivity:
+```java
+public class RegistrationActivity extends FirebaseBaseActivity implements View.OnClickListener {
+
+    private FirebaseAuth auth;
+    private EditText editEmail;
+    private EditText editPassword;
+
+    private String textEmailAddress;
+    private String textPassword;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration);
+
+        auth = FirebaseAuth.getInstance();
+
+        editEmail = findViewById(R.id.edit_email);
+        editPassword = findViewById(R.id.edit_password);
+
+        TextView buttonRegister = findViewById(R.id.button_register);
+        buttonRegister.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_register : {
+                textEmailAddress = editEmail.getText().toString();
+                textPassword = editPassword.getText().toString();
+
+                if(!textEmailAddress.isEmpty() && !textPassword.isEmpty()) {
+                    final ProgressDialog progressDialog = ProgressDialog.show(this, "Please wait...", "Processing...", true);
+
+                    auth.createUserWithEmailAndPassword(textEmailAddress, textPassword)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    progressDialog.dismiss();
+
+                                    if (task.isSuccessful()) {
+                                        updateUI();
+                                    } else {
+                                        Toast.makeText(RegistrationActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                } else {
+                    Toast.makeText(RegistrationActivity.this, "Please do not leave the fields empty.", Toast.LENGTH_LONG).show();
+                }
+
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }
+    }
+
+    private void updateUI() {
+        Toast.makeText(RegistrationActivity.this, "You have registered successfully", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+        intent.putExtra(LoginActivity.KEY_EMAIL, textEmailAddress);
+        startActivity(intent);
+        finish();
+    }
+}
+
+```
+2. Add the following Java code in LoginActivity:
+```java
+public class LoginActivity extends FirebaseBaseActivity implements View.OnClickListener {
+
+    public static final String KEY_EMAIL = "EMAIL";
+
+    private static final String TAG = LoginActivity.class.getCanonicalName();
+
+    private FirebaseAuth auth;
+
+    private EditText editEmail;
+    private EditText editPassword;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        auth = FirebaseAuth.getInstance();
+
+        TextView loginEmailButton = findViewById(R.id.button_email_login);
+        LinearLayout registerButton = findViewById(R.id.button_register);
+        editEmail = findViewById(R.id.edit_email);
+        editPassword = findViewById(R.id.edit_password);
+
+        loginEmailButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_email_login : {
+                String textEmailAddress = editEmail.getText().toString();
+                String textPassword = editPassword.getText().toString();
+
+                if(!textEmailAddress.isEmpty() && !textPassword.isEmpty()) {
+                    final ProgressDialog progressDialog = ProgressDialog.show(this,
+                            "Please wait...", "Processing...", true);
+                    auth.signInWithEmailAndPassword(textEmailAddress, textPassword)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    progressDialog.dismiss();
+
+                                    if (task.isSuccessful()) {
+                                        updateUI();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                } else {
+                    Toast.makeText(LoginActivity.this, "Please do not leave the fields empty.", Toast.LENGTH_LONG).show();
+                }
+
+                break;
+            }
+
+            case R.id.button_register : {
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = auth.getCurrentUser();
+
+        if(currentUser != null) {
+            updateUI();
+        }
+    }
+
+    private void updateUI() {
+        Toast.makeText(LoginActivity.this, "You are logged in", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+        startActivity(intent);
+        finish();
+    }
+}
+```
+### Android Facebook Login with Firebase
+
+#### Step 1 - Enable Facebook Login
 1. Go to [Facebook for Developers](https://developers.facebook.com/).
 2. On top right hand corner, go to `Create App` button and enter the App name as the display name and your own contact email.
 3. Go to Facebook console page and go to `Dashboard` to retrieve `App ID` and `App Secret`.
-4. Go to Firebase console page and go to `Authentication` -> `Sign-in Method` and enable Facebook login. Enter the `App ID` and `App Secret` retrieved from Facebook console page. Copy the OAuth redirect URI as well.
+4. Go to [Firebase](https://console.firebase.google.com/) console page and go to `Authentication` -> `Sign-in Method` and enable Facebook login. Enter the `App ID` and `App Secret` retrieved from Facebook console page. Copy the OAuth redirect URI as well.
 5. Go back to Facebook console page and click on `Add Product`-> under Facebook, click `Setup`. Paste the OAuth redirect URI under the textbox for `Valid OAuth redirect URIs`.
 
-### Step 3 - Setup in Android Studio
+#### Step 2 - Setup in Android Studio
 1. Go to [Facebook Login](https://developers.facebook.com/docs/facebook-login/android).
 2. Select your app in step 1.
 3. Link the Facebook SDK by selecting `Maven`. Add the following code in `build.gradle(Project)`
@@ -76,7 +257,7 @@ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore |
 ```
 Enter the generated key hash in [Facebook Login](https://developers.facebook.com/docs/facebook-login/android). 
 
-### Step 4 - Android Code for Facebook Authentication
+#### Step 3 - Android Code for Facebook Authentication
 1. Add Facebook Login Button in xml layout file:
 ```xml
 <Button
