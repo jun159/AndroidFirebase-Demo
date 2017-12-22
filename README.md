@@ -1,7 +1,7 @@
 # Firebase-Demo
 Android Firebase
 
-## Android Facebook Login with Firebase in - Android Studio
+## Android Facebook Login with Firebase
 
 ### Step 1 - Connect App with Firebase
 1. In Android Studio, go to `Tools` -> `Firebase`.
