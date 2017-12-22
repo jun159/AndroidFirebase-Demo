@@ -1,5 +1,5 @@
 # AndroidFirebase-Demo
-This application demonstratrates how to use Firebase for:
+This application demonstrates how to use Firebase for:
 1. Email/Password authentication
 2. Facebook authentication
 3. Log user events
