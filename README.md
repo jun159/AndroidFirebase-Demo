@@ -1,4 +1,4 @@
-# Firebase-Demo
+# AndroidFirebase-Demo
 This application demonstratrates how to use Firebase for:
 1. Email/Password authentication
 2. Facebook authentication
@@ -16,7 +16,8 @@ This application demonstratrates how to use Firebase for:
 ### Android Email/Password Login with Firebase
 
 #### Step 1 - Enable Email Login
-1. Go to [Firebase](https://console.firebase.google.com/) console page and go to `Authentication` -> `Sign-in Method` and enable Email/Password login. 
+1. Go to [Firebase](https://console.firebase.google.com/) console page and go to `Authentication` -> `Sign-in Method` 
+2. Enable Email/Password login. 
 
 #### Step 2 - Setup in Android Studio
 1. Add the following code in `build.gradle(Project)`
@@ -27,6 +28,10 @@ buildscript {
         classpath 'com.google.gms:google-services:3.1.0'
     }
 }
+```
+2. In your Manifest, add the following permission:
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
 ```
 
 #### Step 3 - Android Code for Facebook Authentication
