@@ -2,7 +2,7 @@
 This application demonstrates how to use Firebase for:
 1. Email/Password authentication
 2. Facebook authentication
-3. Log user events
+3. Log events
 4. Database
 
 ## Android Authentication
@@ -418,6 +418,68 @@ public class LogoutActivity extends AppCompatActivity {
         Intent intent = new Intent(AccountActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+}
+```
+
+## Log Events
+* Learn more at [Firebase Params](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Param).
+* Note that you might have to wait up to hours for Analytics to update the latest records.
+```java
+public class UserActivity extends FirebaseBaseActivity implements View.OnClickListener {
+
+    private FirebaseAuth auth;
+    private FirebaseAnalytics analytics;
+
+    private TextView logoutButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user);
+
+        analytics = FirebaseAnalytics.getInstance(this);
+
+        TextView clickMeButton = findViewById(R.id.button_click_me);
+        TextView doNotClickMeButton = findViewById(R.id.button_do_not_click_me);
+
+        clickMeButton.setOnClickListener(this);
+        doNotClickMeButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_click_me : {
+                // Log button click
+                Snackbar snackbar = Snackbar.make(logoutButton, "Click Me triggered", Snackbar.LENGTH_LONG);
+                snackbar.show();
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "button_click_me");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Click Me!");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Button");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                break;
+            }
+
+            case R.id.button_do_not_click_me : {
+                // Log button click
+                Snackbar snackbar = Snackbar.make(logoutButton, "Do NOT Click Me triggered", Snackbar.LENGTH_LONG);
+                snackbar.show();
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "button_do_not_click_me");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Do NOT Click Me!");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Button");
+                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }
     }
 }
 ```
