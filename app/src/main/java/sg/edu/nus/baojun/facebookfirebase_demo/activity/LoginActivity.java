@@ -132,7 +132,6 @@ public class LoginActivity extends FirebaseBaseActivity implements View.OnClickL
             case R.id.button_register : {
                 Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
-                finish();
                 break;
             }
 
