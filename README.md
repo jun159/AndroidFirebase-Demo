@@ -18,7 +18,7 @@ Android Facebook Login with Firebase
 1. Go to [Facebook Login](https://developers.facebook.com/docs/facebook-login/android).
 2. Select your app in step 1.
 3. Link the Facebook SDK by selecting `Maven`. Add the following code in `build.gradle(Project)`
-```
+```gradle
 buildscript {
     
     repositories {
@@ -32,20 +32,20 @@ buildscript {
 }
 ```
 4. Add the following dependencies in `build.gradle(Module)`
-```
+```gradle
 implementation 'com.facebook.android:facebook-login:[4,5)'
 ```
 5. Add the following in `strings.xml`:
-```
+```xml
 <string name="facebook_app_id">201486427066708</string>
 <string name="fb_login_protocol_scheme">fb201486427066708</string>    
 ```
 6. In your Manifest, add the following permission:
-```
+```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 Also add the following in your application body:
-```
+```xml
 <meta-data
     android:name="com.facebook.sdk.ApplicationId"
     android:value="@string/facebook_app_id" />
@@ -69,14 +69,14 @@ Also add the following in your application body:
 ```
 7. Enter Android package name and default class in [Facebook Login](https://developers.facebook.com/docs/facebook-login/android). Click `Use this Package Name` if package does not exist in Google Play.
 8. Retrieve key hashes for the App by running following command on terminal (Note that password is your Facebook account password):
-```
+```shell
 keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
 ```
 Enter the generated key hash in [Facebook Login](https://developers.facebook.com/docs/facebook-login/android). 
 
 ## Step 4 - Android Code for Facebook Authentication
 1. Add Facebook Login Button in xml layout file:
-```
+```xml
 <Button
     android:id="@+id/login_button"
     android:layout_width="wrap_content"
@@ -86,7 +86,7 @@ Enter the generated key hash in [Facebook Login](https://developers.facebook.com
     android:layout_marginBottom="30dp" /> 
 ```
 2. Add the following Java code in LoginActivity:
-```
+```java
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getCanonicalName();
@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
 }
 ```
 3. Add the following Java code in LogoutActivity:
-```
+```java
 public class LogoutActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
